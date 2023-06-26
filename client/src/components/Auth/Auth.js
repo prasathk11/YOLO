@@ -17,7 +17,7 @@ const SignUp = () => {
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const history = useNavigate();
     const classes = useStyles();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -33,9 +33,9 @@ const SignUp = () => {
         e.preventDefault();
 
         if (isSignup) {
-        dispatch(signup(form, navigate));
+        dispatch(signup(form, history));
         } else {
-        dispatch(signin(form, navigate));
+        dispatch(signin(form, history));
         }
     };
 
@@ -44,8 +44,9 @@ const SignUp = () => {
         const token = res?.tokenId;
 
         try {
-            dispatch({ type: AUTH, data: { result, token } });
-            navigate.push('/');
+        dispatch({ type: AUTH, data: { result, token } });
+
+        history.push('/');
         } catch (error) {
             console.log(error);
         }
